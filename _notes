@@ -14,3 +14,19 @@ Can we now create another component for actually recording our foods. This can b
 at this point, v0 created a UI , with landing page and a dashboard page. 
 in landing page it has header, hero section, billing section, footer etc
 in dashboard there are ways to input food, shows daily goal and records. etc
+
+
+----------------------
+-- cursor
+----------------------
+Base on my current file structure. I want to begin implementation user authentication using Next Auth. Let's work on this step by step, check with me for approval before making any changes, starting with files and folders to create in my structure.
+
+Please keep it as simple as possible by limiting the number of changes we have to make to the structure.
+
+To start we will be using an in memory solution (no prism or any external database at this time)
+
+We would also need a register component to register users. Before we work on a login component.
+
+This is our current landing page @src/app/page.tsx 
+
+This is our current layout @src/app/layout.tsx 

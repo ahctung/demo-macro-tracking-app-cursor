@@ -35,8 +35,8 @@ export function Header() {
           <Button variant="ghost" size="sm">
             Log in
           </Button>
-          <Button size="sm">
-            Get Started
+          <Button asChild size="sm">
+            <Link href="/register">Sign Up</Link>
           </Button>
         </div>
 
@@ -67,8 +67,8 @@ export function Header() {
               <Button variant="ghost" size="sm" className="w-full justify-center">
                 Log in
               </Button>
-              <Button size="sm" className="w-full">
-                Get Started
+              <Button asChild size="sm" className="w-full">
+                <Link href="/register">Sign Up</Link>
               </Button>
             </div>
           </nav>
