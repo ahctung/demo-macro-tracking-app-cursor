@@ -12,12 +12,11 @@ async function registerUserAction(
 ): Promise<RegisterFormState> {
   "use server"
 
-  const name = String(formData.get("name") ?? "").trim()
   const email = String(formData.get("email") ?? "").trim()
   const password = String(formData.get("password") ?? "")
   const confirmPassword = String(formData.get("confirmPassword") ?? "")
 
-  if (!name || !email || !password || !confirmPassword) {
+  if (!email || !password || !confirmPassword) {
     return {
       status: "error",
       message: "Please fill in all fields.",
@@ -39,7 +38,7 @@ async function registerUserAction(
   }
 
   try {
-    registerUser({ name, email, password })
+    registerUser({ email, password })
 
     return {
       status: "success",

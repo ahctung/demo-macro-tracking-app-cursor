@@ -21,8 +21,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         },
       },
       authorize(credentials) {
-        const email = typeof credentials.email === "string" ? credentials.email : ""
-        const password = typeof credentials.password === "string" ? credentials.password : ""
+        const email = typeof credentials?.email === "string" ? credentials.email : ""
+        const password = typeof credentials?.password === "string" ? credentials.password : ""
 
         if (!email || !password) {
           return null
@@ -36,7 +36,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         return {
           id: user.id,
-          name: user.name,
           email: user.email,
         }
       },

@@ -57,11 +57,6 @@ export function RegisterForm({ action }: { action: RegisterFormAction }) {
       <CardContent>
         <form action={formAction} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
-            <Input id="name" name="name" placeholder="Alex Smith" autoComplete="name" required />
-          </div>
-
-          <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"

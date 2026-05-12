@@ -2,7 +2,6 @@ import "server-only"
 
 export type StoredUser = {
   id: string
-  name: string
   email: string
   password: string
   createdAt: string
@@ -11,7 +10,6 @@ export type StoredUser = {
 export type PublicUser = Omit<StoredUser, "password">
 
 type RegisterUserInput = {
-  name: string
   email: string
   password: string
 }
@@ -31,12 +29,11 @@ export function findUserByEmail(email: string) {
   return usersByEmail.get(normalizeEmail(email))
 }
 
-export function registerUser({ name, email, password }: RegisterUserInput): PublicUser {
-  const normalizedName = name.trim()
+export function registerUser({ email, password }: RegisterUserInput): PublicUser {
   const normalizedEmail = normalizeEmail(email)
 
-  if (!normalizedName || !normalizedEmail || !password) {
-    throw new Error("Name, email, and password are required.")
+  if (!normalizedEmail || !password) {
+    throw new Error("Email and password are required.")
   }
 
   if (usersByEmail.has(normalizedEmail)) {
@@ -45,7 +42,6 @@ export function registerUser({ name, email, password }: RegisterUserInput): Publ
 
   const user: StoredUser = {
     id: crypto.randomUUID(),
-    name: normalizedName,
     email: normalizedEmail,
     password,
     createdAt: new Date().toISOString(),
