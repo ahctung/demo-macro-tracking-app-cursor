@@ -38,7 +38,7 @@ async function registerUserAction(
   }
 
   try {
-    registerUser({ email, password })
+    await registerUser({ email, password })
 
     return {
       status: "success",

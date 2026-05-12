@@ -32,8 +32,8 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-4 md:flex">
-          <Button variant="ghost" size="sm">
-            Log in
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/login">Log in</Link>
           </Button>
           <Button asChild size="sm">
             <Link href="/register">Sign Up</Link>
@@ -64,8 +64,8 @@ export function Header() {
               Pricing
             </Link>
             <div className="flex flex-col gap-2 pt-4">
-              <Button variant="ghost" size="sm" className="w-full justify-center">
-                Log in
+              <Button asChild variant="ghost" size="sm" className="w-full justify-center">
+                <Link href="/login">Log in</Link>
               </Button>
               <Button asChild size="sm" className="w-full">
                 <Link href="/register">Sign Up</Link>

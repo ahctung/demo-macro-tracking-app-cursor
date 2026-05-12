@@ -13,7 +13,12 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Activity, Bell, ChevronDown, LogOut, Settings, User } from "lucide-react"
 import Link from "next/link"
 
-export function DashboardHeader() {
+function getEmailInitials(email: string) {
+  const localPart = email.split("@")[0] ?? ""
+  return localPart.slice(0, 2).toUpperCase() || "U"
+}
+
+export function DashboardHeader({ userEmail }: { userEmail: string }) {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -39,9 +44,11 @@ export function DashboardHeader() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="gap-2 px-2">
                 <Avatar className="h-8 w-8">
-                  <AvatarFallback className="bg-primary/10 text-primary">JD</AvatarFallback>
+                  <AvatarFallback className="bg-primary/10 text-primary">
+                    {getEmailInitials(userEmail)}
+                  </AvatarFallback>
                 </Avatar>
-                <span className="hidden text-sm font-medium md:inline-block">John Doe</span>
+                <span className="hidden text-sm font-medium md:inline-block">{userEmail}</span>
                 <ChevronDown className="h-4 w-4 text-muted-foreground" />
               </Button>
             </DropdownMenuTrigger>

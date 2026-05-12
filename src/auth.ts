@@ -1,11 +1,14 @@
-import NextAuth from "next-auth"
+import type { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 
 import { validateUserCredentials } from "@/lib/in-memory-user-store"
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
+  },
+  pages: {
+    signIn: "/login",
   },
   providers: [
     Credentials({
@@ -20,7 +23,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           type: "password",
         },
       },
-      authorize(credentials) {
+      async authorize(credentials) {
         const email = typeof credentials?.email === "string" ? credentials.email : ""
         const password = typeof credentials?.password === "string" ? credentials.password : ""
 
@@ -28,7 +31,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null
         }
 
-        const user = validateUserCredentials(email, password)
+        const user = await validateUserCredentials(email, password)
 
         if (!user) {
           return null
@@ -41,4 +44,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-})
+}
