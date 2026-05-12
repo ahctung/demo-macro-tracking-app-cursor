@@ -1,0 +1,16 @@
+
+----------------------
+-- v0 for the UI
+----------------------
+
+Prompts
+-------
+Please help me create a landing page for a macro tracking web app. This will be built with NextJS (Typescript, App Router, Tailwind CSS)
+-------
+Can we now create another component for actually recording our foods. This can be in a dashboard after user logs in.
+-------
+
+
+at this point, v0 created a UI , with landing page and a dashboard page. 
+in landing page it has header, hero section, billing section, footer etc
+in dashboard there are ways to input food, shows daily goal and records. etc
