@@ -12,6 +12,7 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Activity, Bell, ChevronDown, LogOut, Settings, User } from "lucide-react"
 import Link from "next/link"
+import { signOut } from "next-auth/react"
 
 function getEmailInitials(email: string) {
   const localPart = email.split("@")[0] ?? ""
@@ -64,7 +65,12 @@ export function DashboardHeader({ userEmail }: { userEmail: string }) {
                 Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive">
+              <DropdownMenuItem
+                className="text-destructive focus:text-destructive"
+                onSelect={() => {
+                  void signOut({ callbackUrl: "/" })
+                }}
+              >
                 <LogOut className="mr-2 h-4 w-4" />
                 Log out
               </DropdownMenuItem>
