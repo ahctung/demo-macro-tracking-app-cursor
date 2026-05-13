@@ -102,3 +102,12 @@ and then update prisma.ts accordingly
 Prompt:
 After registering a new user, can we log into as that new user and redirect to dashboard pls.
 
+----------------------
+Current state:
+Able to sign up a new user or log in as an existing user
+User is saved in postgres db, in a User table
+When log in as an user, will be redirected to dashboard page
+Dashboard page shows some dummy food entries, and allows you to add more food. However, the change is not persisted.
+
+Next steps:
+If want to continue. Then should implement the food entries, with relevant tables.
