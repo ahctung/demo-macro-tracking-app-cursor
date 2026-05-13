@@ -4,7 +4,7 @@ import {
   RegisterForm,
   type RegisterFormState,
 } from "@/components/auth/register-form"
-import { registerUser } from "@/lib/in-memory-user-store"
+import { registerUser } from "@/lib/user-db"
 
 async function registerUserAction(
   _previousState: RegisterFormState,

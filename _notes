@@ -2,11 +2,10 @@
 ----------------------
 -- v0 for the UI
 ----------------------
-
-Prompts
--------
+Prompt:
 Please help me create a landing page for a macro tracking web app. This will be built with NextJS (Typescript, App Router, Tailwind CSS)
 -------
+Prompt:
 Can we now create another component for actually recording our foods. This can be in a dashboard after user logs in.
 -------
 
@@ -19,6 +18,7 @@ in dashboard there are ways to input food, shows daily goal and records. etc
 ----------------------
 -- cursor
 ----------------------
+Prompt:
 Base on my current file structure. I want to begin implementation user authentication using Next Auth. Let's work on this step by step, check with me for approval before making any changes, starting with files and folders to create in my structure.
 
 Please keep it as simple as possible by limiting the number of changes we have to make to the structure.
@@ -30,3 +30,70 @@ We would also need a register component to register users. Before we work on a l
 This is our current landing page @src/app/page.tsx 
 
 This is our current layout @src/app/layout.tsx 
+----------------------
+Prompt:
+Please add a Sign Up button that links to register
+----------------------
+Prompt:
+Ok, let's build a login page and wire the Log In button to it. After logging in, we should be directed to the dashboard page as the logged in user.
+----------------------
+So had a bunch of issue with next auth versions, and also use of in memory saving of data vs saving to a local file. Missing a stable secret for NextAUTH. etc Work with AI to get them all resolved
+----------------------
+Prompt:
+I just installed PostgreSQL. Please provide detailed step-by-step guide in integrating PostgreSQL into this project. We want to move from the in-memory JSON file solution to use the PostgreSQL database. To begin with, let's start with creating necessary database through terminal.
+We don't need to migrate any current users from data/users.json. No migration steps are needed.
+Lastly, please provide bcrypt password hashing
+----------------------
+Setup postgres
+
+
+psql -U postgres
+CREATE USER macrotrack_app WITH PASSWORD 'choose_a_strong_password_here';
+CREATE DATABASE macrotrack OWNER macrotrack_app;
+
+(add dependencies, run these on Powershell, not cursor terminal)
+npm install @prisma/client bcrypt
+npm install -D prisma
+npm install -D @types/bcrypt
+
+npx prisma init     (this can run in Cursor Terminal, creates prisma schema file)
+
+
+
+having a few issue when running npx prisma migrate dev --name init_user , not sure if really need it
+prisma migrate does a "migration" and creates the database tables
+To do it, it will create this shadow database, for that to happen, u will need to either
+- give macrotrack_app permission to CREATEDB
+- or manually create a shadow db , and define SHADOW_DATABASE_URL in env to point to it
+
+alternatively , I hink you don't have to "migrate". For prototyping can just create the tables using
+npx prisma db push
+
+Yup confirmed, after npx prisma db push, it took User model defined in schema.prisma, and created a User table in the posgres db
+
+npx prisma generate
+
+----------------------
+proceed with integration
+
+Prompt:
+Ok, I have now sync up prima schema with postgres db, and created the datatable. Let's implement this step that you suggested: 7. Add a singleton Prisma client for Next.js (recommended)
+
+(this setups up src/lib/prisma.ts)
+
+Prompt:
+Now, let's implement the next step : 8. Replace JSON storage with DB + bcrypt
+
+(this modifies in-memory-user-store.ts to stop using the users.json file and instead use prisma and also include bcrypt)
+
+
+----------------------
+All done, now do some testing
+
+while testing, had error when clicking Sign Up button, saying the client requires an adapter
+
+AI suggested we need to fix this by installing adapter
+
+npm install @prisma/adapter-pg pg; npm install -D @types/pg
+
+and then update prisma.ts accordingly

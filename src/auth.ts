@@ -1,7 +1,7 @@
 import type { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 
-import { validateUserCredentials } from "@/lib/in-memory-user-store"
+import { validateUserCredentials } from "@/lib/user-db"
 
 export const authOptions: NextAuthOptions = {
   session: {
