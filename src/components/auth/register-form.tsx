@@ -1,8 +1,10 @@
 'use client'
 
 import Link from "next/link"
-import { useActionState } from "react"
+import { useActionState, useEffect, useRef, useState } from "react"
 import { useFormStatus } from "react-dom"
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -43,7 +45,39 @@ function SubmitButton() {
 }
 
 export function RegisterForm({ action }: { action: RegisterFormAction }) {
+  const router = useRouter()
   const [state, formAction] = useActionState(action, initialRegisterFormState)
+  const [isAutoSigningIn, setIsAutoSigningIn] = useState(false)
+  const lastSubmittedCredentialsRef = useRef<{ email: string; password: string } | null>(null)
+
+  useEffect(() => {
+    async function run() {
+      if (state.status !== "success") return
+      if (isAutoSigningIn) return
+
+      const credentials = lastSubmittedCredentialsRef.current
+      if (!credentials) return
+
+      setIsAutoSigningIn(true)
+
+      const result = await signIn("credentials", {
+        email: credentials.email,
+        password: credentials.password,
+        redirect: false,
+        callbackUrl: "/dashboard",
+      })
+
+      if (result?.error) {
+        setIsAutoSigningIn(false)
+        return
+      }
+
+      router.push(result?.url ?? "/dashboard")
+      router.refresh()
+    }
+
+    void run()
+  }, [isAutoSigningIn, router, state.status])
 
   return (
     <Card className="w-full max-w-md">
@@ -55,7 +89,16 @@ export function RegisterForm({ action }: { action: RegisterFormAction }) {
       </CardHeader>
 
       <CardContent>
-        <form action={formAction} className="space-y-4">
+        <form
+          action={(formData) => {
+            const email = String(formData.get("email") ?? "").trim()
+            const password = String(formData.get("password") ?? "")
+            lastSubmittedCredentialsRef.current = email && password ? { email, password } : null
+
+            return formAction(formData)
+          }}
+          className="space-y-4"
+        >
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input

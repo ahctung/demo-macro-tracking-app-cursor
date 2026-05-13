@@ -97,3 +97,8 @@ AI suggested we need to fix this by installing adapter
 npm install @prisma/adapter-pg pg; npm install -D @types/pg
 
 and then update prisma.ts accordingly
+
+----------------------
+Prompt:
+After registering a new user, can we log into as that new user and redirect to dashboard pls.
+
